@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ producto.nombre }} - Librería Online{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" class="img-fluid rounded shadow" alt="{{ producto.nombre }}">
+        {% else %}
+        <img src="https://via.placeholder.com/500x700?text={{ producto.nombre }}" class="img-fluid rounded shadow" alt="{{ producto.nombre }}">
+        {% endif %}
+    </div>
+    <div class="col-md-7">
+        <span class="badge bg-info mb-2">{{ producto.categoria.nombre }}</span>
+        <h1 class="mb-3">{{ producto.nombre }}</h1>
+        
+        {% if producto.autor %}
+        <p class="lead">
+            <i class="fas fa-user"></i> <strong>Autor:</strong> {{ producto.autor }}
+        </p>
+        {% endif %}
+        
+        {% if producto.editorial %}
+        <p>
+            <i class="fas fa-building"></i> <strong>Editorial:</strong> {{ producto.editorial }}
+        </p>
+        {% endif %}
+        
+        {% if producto.isbn %}
+        <p>
+            <i class="fas fa-barcode"></i> <strong>ISBN:</strong> {{ producto.isbn }}
+        </p>
+        {% endif %}
+        
+        <hr>
+        
+        <h3 class="mb-3">Descripción</h3>
+        <p class="text-justify">{{ producto.descripcion }}</p>
+        
+        <hr>
+        
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="precio mb-0">S/. {{ producto.precio }}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="mb-0">
+                    <i class="fas fa-box"></i> <strong>Stock:</strong> 
+                    {% if producto.stock > 0 %}
+                    <span class="text-success">{{ producto.stock }} disponibles</span>
+                    {% else %}
+                    <span class="text-danger">Agotado</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="d-grid gap-2">
+            {% if producto.stock > 0 %}
+            <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-cart-plus"></i> Agregar al Carrito
+            </a>
+            {% else %}
+            <button class="btn btn-secondary btn-lg" disabled>
+                <i class="fas fa-ban"></i> No Disponible
+            </button>
+            {% endif %}
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Volver a la Tienda
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Productos Relacionados -->
+{% if productos_relacionados %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h3 class="mb-4">
+            <i class="fas fa-book-open"></i> Productos Relacionados
+        </h3>
+    </div>
+    {% for prod in productos_relacionados %}
+    <div class="col-md-3 mb-4">
+        <div class="card h-100">
+            {% if prod.imagen %}
+            <img src="{{ prod.imagen.url }}" class="card-img-top" alt="{{ prod.nombre }}" style="height: 250px; object-fit: cover;">
+            {% else %}
+            <img src="https://via.placeholder.com/300x400?text={{ prod.nombre }}" class="card-img-top" alt="{{ prod.nombre }}">
+            {% endif %}
+            <div class="card-body">
+                <h6 class="card-title">{{ prod.nombre }}</h6>
+                <p class="precio">S/. {{ prod.precio }}</p>
+                <a href="{% url 'detalle_producto' prod.id %}" class="btn btn-sm btn-outline-primary">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
