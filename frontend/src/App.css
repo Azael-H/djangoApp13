@@ -1,0 +1,78 @@
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #e74c3c;
+  --accent-color: #3498db;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.navbar {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,.2);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-danger {
+  background-color: var(--secondary-color);
+  border: none;
+}
+
+.precio {
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.search-form {
+  max-width: 500px;
+}
+
+.categoria-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.categoria-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.15);
+}
+
+.bg-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 200px !important;
+  }
+}

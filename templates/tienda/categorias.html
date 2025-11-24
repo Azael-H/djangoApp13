@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Categorías - Librería Online{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="text-center mb-4">
+            <i class="fas fa-list"></i> Todas las Categorías
+        </h1>
+        <p class="text-center text-muted">Explora nuestra selección organizada por categorías</p>
+    </div>
+</div>
+
+<div class="row">
+    {% for categoria in categorias %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="{% url 'productos_categoria' categoria.id %}" class="text-decoration-none">
+            <div class="card h-100 categoria-card">
+                {% if categoria.imagen %}
+                <img src="{{ categoria.imagen.url }}" class="card-img-top" alt="{{ categoria.nombre }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-gradient d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <i class="fas fa-bookmark fa-4x text-white"></i>
+                </div>
+                {% endif %}
+                <div class="card-body text-center">
+                    <h3 class="card-title">{{ categoria.nombre }}</h3>
+                    <p class="card-text text-muted">{{ categoria.descripcion }}</p>
+                    <span class="badge bg-primary">{{ categoria.productos.count }} productos</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <i class="fas fa-exclamation-circle"></i> No hay categorías disponibles.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+.categoria-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.categoria-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,.15);
+}
+
+.bg-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+</style>
+{% endblock %}
